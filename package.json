@@ -1,0 +1,23 @@
+{
+  "name": "content_management_system",
+  "version": "1.0.0",
+  "description": "A command line application to create, read, update, and delete employees in a MySQL database.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rev1311/content_management_system.git"
+  },
+  "author": "MP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rev1311/content_management_system/issues"
+  },
+  "homepage": "https://github.com/rev1311/content_management_system#readme",
+  "dependencies": {
+    "inquirer": "^7.0.3",
+    "mysql": "^2.17.1"
+  }
+}
