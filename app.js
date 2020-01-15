@@ -34,6 +34,23 @@ const deptMenuQs = [
     }
 ];
 
+const roleMenuQs = [
+    {
+        name: "ask",
+        message: "Select a task:",
+        type: "list",
+        choices: ["Create new role", "View existing role(s)", "Update existing role"]
+    }
+];
+
+const empMenuQs = [
+    {
+        name: "ask",
+        message: "Select a task:",
+        type: "list",
+        choices: ["Create new employee", "View existing employee(s)", "Update existing employee"]
+    }
+];
 
 
 function openingSalvo() {
