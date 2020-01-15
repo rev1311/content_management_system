@@ -64,3 +64,15 @@ function openingSalvo() {
         }
     });
 };
+
+function deptMenu() {
+    inquirer.prompt(deptMenuQs).then(function(res) {
+        if (res.ask === "Create new Department") {
+            deptCreate();
+        } else if (res.ask === "View existing Department(s)") {
+            deptView();
+        } else if (res.ask === "Update existing Department") {
+            deptUpdate();
+        }
+    });
+};
