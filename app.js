@@ -25,7 +25,16 @@ const openQs = [
     }
 ];
 
-const 
+const deptMenuQs = [
+    {
+        name: "ask",
+        message: "Select a task:",
+        type: "list",
+        choices: ["Create new Department", "View existing Department(s)", "Update existing Department"]
+    }
+];
+
+
 
 function openingSalvo() {
     inquirer.prompt(openQs).then(function(res) {
