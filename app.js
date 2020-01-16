@@ -19,84 +19,32 @@ connection.connect(function(err) {
 const openQs = [
     {
         name: "ask",
-        message: "Select a topic:",
+        message: "Select an option:",
         type: "list",
-        choices: ["Department", "Role", "Employee"]
-    }
-];
-
-const deptMenuQs = [
-    {
-        name: "ask",
-        message: "Select a task:",
-        type: "list",
-        choices: ["Create new Department", "View existing Department(s)", "Update existing Department"]
-    }
-];
-
-const roleMenuQs = [
-    {
-        name: "ask",
-        message: "Select a task:",
-        type: "list",
-        choices: ["Create new role", "View existing role(s)", "Update existing role"]
-    }
-];
-
-const empMenuQs = [
-    {
-        name: "ask",
-        message: "Select a task:",
-        type: "list",
-        choices: ["Create new employee", "View existing employee(s)", "Update existing employee"]
+        choices: ["View all employees", "View all employees by department", "Add a new employee", "Update existing employee", "Exit"]
     }
 ];
 
 
 function openingSalvo() {
     inquirer.prompt(openQs).then(function(res) {
-        if (res.ask === "Department") {
-            deptMenu();
-        } else if (res.ask === "Role") {
-            roleMenu();
-        } else if (res.ask === "Employee") {
-            empMenu();
+        if (res.ask === "View all employees") {
+            showAll();
+        } else if (res.ask === "View all employees by department") {
+            showAllbyDept();
+        } else if (res.ask === "Add a new employee") {
+            createEmp();
+        } else if (res.ask === "Update existing employee") {
+            updateEmp();
+        } else if (res.ask === "Exit") {
+            return;
         }
     });
 };
 
-function deptMenu() {
-    inquirer.prompt(deptMenuQs).then(function(res) {
-        if (res.ask === "Create new Department") {
-            deptCreate();
-        } else if (res.ask === "View existing Department(s)") {
-            deptView();
-        } else if (res.ask === "Update existing Department") {
-            deptUpdate();
-        }
-    });
-};
-
-function roleMenu() {
-    inquirer.prompt(roleMenuQs).then(function(res) {
-        if (res.ask === "Create new role") {
-            roleCreate();
-        } else if (res.ask === "View existing role(s)") {
-            roleView();
-        } else if (res.ask === "Update existing role") {
-            roleUpdate();
-        }
-    });
-};
-
-function empMenu() {
-    inquirer.prompt(empMenuQs).then(function(res) {
-        if (res.ask === "Create new empployee") {
-            empCreate();
-        } else if (res.ask === "View existing empployee(s)") {
-            empView();
-        } else if (res.ask === "Update existing empployee") {
-            empUpdate();
-        }
-    });
-};
+function showAll() {
+    connection.query(`SELECT * FROM employees`, function(err, res) {
+        if (err) throw err;
+        console.table(res)
+    })
+}
