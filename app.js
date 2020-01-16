@@ -76,3 +76,15 @@ function deptMenu() {
         }
     });
 };
+
+function roleMenu() {
+    inquirer.prompt(roleMenuQs).then(function(res) {
+        if (res.ask === "Create new role") {
+            roleCreate();
+        } else if (res.ask === "View existing role(s)") {
+            roleView();
+        } else if (res.ask === "Update existing role") {
+            roleUpdate();
+        }
+    });
+};
