@@ -88,3 +88,15 @@ function roleMenu() {
         }
     });
 };
+
+function empMenu() {
+    inquirer.prompt(empMenuQs).then(function(res) {
+        if (res.ask === "Create new empployee") {
+            empCreate();
+        } else if (res.ask === "View existing empployee(s)") {
+            empView();
+        } else if (res.ask === "Update existing empployee") {
+            empUpdate();
+        }
+    });
+};
