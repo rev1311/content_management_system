@@ -3,25 +3,35 @@ CREATE DATABASE cms_db;
 USE cms_db;
 
 CREATE TABLE department (
-	id INT NOT NULL AUTO_INCREMENT,
-	deptname VARCHAR(50) NOT NULL,
-    PRIMARY KEY(id)
+	dept_id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+    PRIMARY KEY(dept_id)
 );
 
 CREATE TABLE role (
-	id INT NOT NULL AUTO_INCREMENT,
+	role_id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(50) NOT NULL,
 	salary INT NOT NULL,
-    -- FOREIGN KEY(id) REFERENCES department(id),
-    PRIMARY KEY(id)
+    FOREIGN KEY(dept_id) REFERENCES department(dept_id),
+    PRIMARY KEY(role_id)
 );
 
 
 CREATE TABLE employees (
-	id INT NOT NULL AUTO_INCREMENT,
+	emp_id INT NOT NULL AUTO_INCREMENT,
 	firstname VARCHAR(20),
 	lastname VARCHAR(20),
---     FOREIGN KEY(id) REFERENCES role(title),
--- 	FOREIGN KEY (id) REFERENCES role(id),
-	PRIMARY KEY (id)
+    FOREIGN KEY(role_id) REFERENCES role,
+	FOREIGN KEY (manager_id) REFERENCES role,
+	PRIMARY KEY (emp_id)
 );
+
+INSERT INTO employees (firstname, lastname)
+VALUES ("Buck", "Doe"), ("Jane", "Houston"), ("Jim", "Hancock"), ("Will", "Black"),
+("Felicia", "Knight"), ("Ben", "Sharpie"), ("Bill", "Shakespeare");
+
+INSERT INTO role (title, salary)
+VALUES ("Manager", 150000), ("Engineer", 200000), ("Developer", 100000), ("Associate", 100000);
+
+INSERT INTO department (name)
+VALUES ("Sales"), ("Production"), ("Admin")
