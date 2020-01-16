@@ -43,8 +43,22 @@ function openingSalvo() {
 };
 
 function showAll() {
-    connection.query(`SELECT * FROM employees`, function(err, res) {
+    connection.query(`SELECT * FROM employees a, role b WHERE a.role_id = b.id`, function(err, res) {
         if (err) throw err;
-        console.table(res)
+        console.table(res);
     })
-}
+};
+
+function showAllbyDept() {
+    connection.query(`SELECT * FROM employees SORT BY dept_id DESC`, function(err, res) {
+        if (err) throw err;
+        console.table(res);
+    })
+};
+
+function createEmp() {
+    inquirer.prompt(createEmpQs).then(function(res) {
+        connection.query(`INSERT INTO employees (firstname, lastname, role_id) VALUES ("${res.fname}", "${res.lname}", ${res.role})`);
+        
+    })
+};
