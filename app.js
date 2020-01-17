@@ -45,6 +45,27 @@ const createEmpQs = [
     }
 ];
 
+const createDeptQs = [
+    {
+        name: "name",
+        message: "Enter new department name:",
+        type: "input"
+    }
+];
+
+const createRoleQs = [
+    {
+        name: "title",
+        message: "Enter new role's title",
+        type: "input"
+    },
+    {
+        name: "salary",
+        message: "Enter new role's salary",
+        type: "number"
+    }
+]
+
 const updateSelEmpQs = [
     {
         name: "select",
