@@ -89,6 +89,7 @@ function showAllDept() {
     connection.query(`SELECT * FROM department`, function(err, res) {
         if (err) throw err;
         console.table(res);
+        openingSalvo();
     });
 };
 
@@ -96,6 +97,7 @@ function showAllRole() {
     connection.query(`SELECT * FROM role`, function(err, res) {
         if (err) throw err;
         console.table(res);
+        openingSalvo();
     });
 };
 
@@ -112,7 +114,11 @@ function createEmp() {
 };
 
 function createDept() {
-
+    inquirer.prompt(createDeptQs).then(function(res) {
+        connection.query(`INSERT INTO department (name) VALUES ("${res.name}")`);
+        console.log(`${res.name} successfully added!`);
+        openingSalvo();
+    });
 };
 
 function createRole() {
