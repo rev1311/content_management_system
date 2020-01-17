@@ -25,6 +25,27 @@ const openQs = [
     }
 ];
 
+const createEmpQs = [
+    {
+        name: "fname",
+        message: "Enter employee's first name:",
+        type: "input"
+    },
+    {
+        name: "lname",
+        message: "Enter employee's last name:",
+        type: "input"
+    },
+    {
+        name: "role",
+        message: "Select employee's role:",
+        type: "list",
+        choices: ["Engineer", "Developer", "Associate"]
+    }
+];
+
+
+
 
 function openingSalvo() {
     inquirer.prompt(openQs).then(function(res) {
@@ -37,15 +58,16 @@ function openingSalvo() {
         } else if (res.ask === "Update existing employee") {
             updateEmp();
         } else if (res.ask === "Exit") {
-            return;
+            // return connection.end();;
         }
     });
 };
 
 function showAll() {
-    connection.query(`SELECT * FROM employees a, role b WHERE a.role_id = b.id`, function(err, res) {
+    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a, role b WHERE a.role_id = b.title`, function(err, res) {
         if (err) throw err;
         console.table(res);
+        openingSalvo();
     })
 };
 
