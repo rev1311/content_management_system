@@ -41,7 +41,7 @@ const createEmpQs = [
         name: "role",
         message: "Select employee's role:",
         type: "list",
-        choices: ["Engineer", "Developer", "Associate"]
+        choices: [1, 2, 3]
     }
 ];
 
@@ -93,13 +93,13 @@ function openingSalvo() {
         } else if (res.ask === "Add a new role") {
             createRole();
         } else if (res.ask === "Exit") {
-            return;
+            return connection.end();
         }
     });
 };
 
 function showAll() {
-    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a, role b WHERE a.role_id = b.title`, function(err, res) {
+    connection.query(`SELECT t1.id, t1.firstname, t1.lastname, t2.title, t2.salary FROM employees AS t1 INNER JOIN role AS t2 WHERE t1.role_id = t2.id`, function(err, res) {
         if (err) throw err;
         console.table(res);
         openingSalvo();
@@ -123,7 +123,9 @@ function showAllRole() {
 };
 
 function updateEmp() {
-
+    inquirer.prompt(updateEmpQs).then(function(res) {
+        connection.query(`UPDATE employees SET firstname = "${res.fname}", lastname = "${res.lname}, role_id = "${res.role}`)
+    })
 };
 
 function createEmp() {
