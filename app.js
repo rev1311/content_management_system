@@ -16,6 +16,7 @@ connection.connect(function(err) {
     openingSalvo();
 });
 
+
 const openQs = [
     {
         name: "ask",
@@ -58,7 +59,7 @@ function openingSalvo() {
         } else if (res.ask === "Update existing employee") {
             updateEmp();
         } else if (res.ask === "Exit") {
-            // return connection.end();;
+            return;
         }
     });
 };
@@ -68,19 +69,20 @@ function showAll() {
         if (err) throw err;
         console.table(res);
         openingSalvo();
-    })
+    });
 };
 
 function showAllbyDept() {
-    connection.query(`SELECT * FROM employees SORT BY dept_id DESC`, function(err, res) {
+    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a, role b WHERE a.role_id = b.title ORDER BY b.dept_id DESC`, function(err, res) {
         if (err) throw err;
         console.table(res);
-    })
+    });
 };
 
 function createEmp() {
     inquirer.prompt(createEmpQs).then(function(res) {
-        connection.query(`INSERT INTO employees (firstname, lastname, role_id) VALUES ("${res.fname}", "${res.lname}", ${res.role})`);
-        
-    })
+        connection.query(`INSERT INTO employees (firstname, lastname, role_id) VALUES ("${res.fname}", "${res.lname}", "${res.role}")`);
+        console.log(`${res.fname} ${res.lname} successfully added!`);
+        openingSalvo();
+    });
 };
