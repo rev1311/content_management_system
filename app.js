@@ -22,7 +22,7 @@ const openQs = [
         name: "ask",
         message: "Select an option:",
         type: "list",
-        choices: ["View all employees", "View all employees by department", "Add a new employee", "Update existing employee", "Exit"]
+        choices: ["View all employees", "View all employees by department", "View all employees by title", "Update existing employee", "Add a new employee", "Add a new department", "Add a new title", "Exit"]
     }
 ];
 
@@ -45,7 +45,14 @@ const createEmpQs = [
     }
 ];
 
-
+const updateEmpQs = [
+    {
+        name: "select",
+        message: "Which employee would you like to edit?",
+        type: "list",
+        choices: []
+    }
+]
 
 
 function openingSalvo() {
@@ -54,11 +61,17 @@ function openingSalvo() {
             showAll();
         } else if (res.ask === "View all employees by department") {
             showAllbyDept();
+        } else if (res.ask === "View all employees by title") {
+            showAllbyRole();
+        } else if (res.ask === "Update existing employee") {
+            updateEmp();        
         } else if (res.ask === "Add a new employee") {
             createEmp();
-        } else if (res.ask === "Update existing employee") {
-            updateEmp();
-        } else if (res.ask === "Exit") {
+        } else if (res.ask === "Add a new department") {
+            createDept();
+        } else if (res.ask === "Add a new title") {
+            createRole();
+\        } else if (res.ask === "Exit") {
             return;
         }
     });
@@ -79,10 +92,26 @@ function showAllbyDept() {
     });
 };
 
+function showAllbyRole() {
+
+};
+
+function updateEmp() {
+
+};
+
 function createEmp() {
     inquirer.prompt(createEmpQs).then(function(res) {
         connection.query(`INSERT INTO employees (firstname, lastname, role_id) VALUES ("${res.fname}", "${res.lname}", "${res.role}")`);
         console.log(`${res.fname} ${res.lname} successfully added!`);
         openingSalvo();
     });
+};
+
+function createDept() {
+
+};
+
+function createRole() {
+
 };
