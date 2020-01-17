@@ -22,7 +22,7 @@ const openQs = [
         name: "ask",
         message: "Select an option:",
         type: "list",
-        choices: ["View all employees", "View all employees by department", "View all employees by title", "Update existing employee", "Add a new employee", "Add a new department", "Add a new title", "Exit"]
+        choices: ["View all employees", "View all departments", "View all roles", "Update existing employee", "Add a new employee", "Add a new department", "Add a new role", "Exit"]
     }
 ];
 
@@ -59,17 +59,17 @@ function openingSalvo() {
     inquirer.prompt(openQs).then(function(res) {
         if (res.ask === "View all employees") {
             showAll();
-        } else if (res.ask === "View all employees by department") {
-            showAllbyDept();
-        } else if (res.ask === "View all employees by title") {
-            showAllbyRole();
+        } else if (res.ask === "View all departments") {
+            showAllDept();
+        } else if (res.ask === "View all roles") {
+            showAllRole();
         } else if (res.ask === "Update existing employee") {
             updateEmp();        
         } else if (res.ask === "Add a new employee") {
             createEmp();
         } else if (res.ask === "Add a new department") {
             createDept();
-        } else if (res.ask === "Add a new title") {
+        } else if (res.ask === "Add a new role") {
             createRole();
         } else if (res.ask === "Exit") {
             return;
@@ -85,15 +85,18 @@ function showAll() {
     });
 };
 
-function showAllbyDept() {
-    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a, role b WHERE a.role_id = b.title ORDER BY b.dept_id DESC`, function(err, res) {
+function showAllDept() {
+    connection.query(`SELECT * FROM department`, function(err, res) {
         if (err) throw err;
         console.table(res);
     });
 };
 
-function showAllbyRole() {
-
+function showAllRole() {
+    connection.query(`SELECT * FROM role`, function(err, res) {
+        if (err) throw err;
+        console.table(res);
+    });
 };
 
 function updateEmp() {
