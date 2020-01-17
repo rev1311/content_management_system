@@ -45,14 +45,14 @@ const createEmpQs = [
     }
 ];
 
-const updateEmpQs = [
+const updateSelEmpQs = [
     {
         name: "select",
         message: "Which employee would you like to edit?",
-        type: "list",
-        choices: []
+        type: "input"
     }
-]
+];
+
 
 
 function openingSalvo() {
@@ -71,7 +71,7 @@ function openingSalvo() {
             createDept();
         } else if (res.ask === "Add a new title") {
             createRole();
-\        } else if (res.ask === "Exit") {
+        } else if (res.ask === "Exit") {
             return;
         }
     });
