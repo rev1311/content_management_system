@@ -12,21 +12,23 @@ CREATE TABLE role (
 	id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(50) NOT NULL,
 	salary INT NOT NULL,
-    PRIMARY KEY(id)
+    dept_id INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(dept_id) REFERENCES department(id)
 );
 
 CREATE TABLE employees (
 	id INT NOT NULL AUTO_INCREMENT,
 	firstname VARCHAR(20),
 	lastname VARCHAR(20),
-	role_id VARCHAR(20) NOT NULL,
-	-- manager_id VARCHAR(20) NULL,
-	PRIMARY KEY (id)
+	role_id INT NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(role_id) REFERENCES role(id)
 );
 
 INSERT INTO employees (firstname, lastname, role_id)
-VALUES ("Buck", "Doe", "Engineer"), ("Jane", "Houston", "Associate"), ("Jim", "Hancock", "Associate"), ("Will", "Black", "Developer"),
-("Felicia", "Knight", "Developer"), ("Ben", "Sharpie", "Associate"), ("Bill", "Shakespeare", "Developer");
+VALUES ("Buck", "Doe", "1"), ("Jane", "Houston", "3"), ("Jim", "Hancock", "3"), ("Will", "Black", "2"),
+("Felicia", "Knight", "2"), ("Ben", "Sharpie", "3"), ("Bill", "Shakespeare", "2");
 
 INSERT INTO role (title, salary)
 VALUES ("Engineer", 200000), ("Developer", 100000), ("Associate", 100000);
