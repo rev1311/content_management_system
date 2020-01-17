@@ -8,7 +8,7 @@ CREATE TABLE department (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
 	id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(50) NOT NULL,
 	salary INT NOT NULL,
@@ -23,17 +23,21 @@ CREATE TABLE employees (
 	lastname VARCHAR(20),
 	role_id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(role_id) REFERENCES role(id)
+	FOREIGN KEY(role_id) REFERENCES roles(id)
 );
+
+INSERT INTO department (name)
+VALUES ("Sales"), ("Production"), ("Admin");
+
+
+INSERT INTO roles (title, salary, dept_id)
+VALUES ("Engineer", 200000, "2"), ("Developer", 100000, "2"), ("Associate", 100000, "1");
+
 
 INSERT INTO employees (firstname, lastname, role_id)
 VALUES ("Buck", "Doe", "1"), ("Jane", "Houston", "3"), ("Jim", "Hancock", "3"), ("Will", "Black", "2"),
 ("Felicia", "Knight", "2"), ("Ben", "Sharpie", "3"), ("Bill", "Shakespeare", "2");
 
-INSERT INTO role (title, salary)
-VALUES ("Engineer", 200000), ("Developer", 100000), ("Associate", 100000);
 
-INSERT INTO department (name)
-VALUES ("Sales"), ("Production"), ("Admin")
 
   
