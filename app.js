@@ -99,7 +99,7 @@ function openingSalvo() {
 };
 
 function showAll() {
-    connection.query(`SELECT t1.id, t1.firstname, t1.lastname, t2.title, t2.salary FROM employees AS t1 INNER JOIN role AS t2 WHERE t1.role_id = t2.id`, function(err, res) {
+    connection.query(`SELECT * FROM employees a LEFT JOIN roles b ON a.role_id = b.id;`, function(err, res) {
         if (err) throw err;
         console.table(res);
         openingSalvo();
@@ -115,7 +115,7 @@ function showAllDept() {
 };
 
 function showAllRole() {
-    connection.query(`SELECT * FROM role`, function(err, res) {
+    connection.query(`SELECT * FROM roles`, function(err, res) {
         if (err) throw err;
         console.table(res);
         openingSalvo();
@@ -146,7 +146,7 @@ function createDept() {
 
 function createRole() {
     inquirer.prompt(createRoleQs).then(function(res) {
-        connection.query(`INSERT INTO role (title, salary) VALUES ("${res.title}", "${res.salary}")`);
+        connection.query(`INSERT INTO roles (title, salary, dept_id) VALUES ("${res.title}", "${res.salary}")`);
         console.log(`${res.name} successfully added!`);
         openingSalvo();
     });
