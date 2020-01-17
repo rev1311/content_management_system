@@ -122,5 +122,9 @@ function createDept() {
 };
 
 function createRole() {
-
+    inquirer.prompt(createRoleQs).then(function(res) {
+        connection.query(`INSERT INTO role (title, salary) VALUES ("${res.title}", "${res.salary}")`);
+        console.log(`${res.name} successfully added!`);
+        openingSalvo();
+    });
 };
