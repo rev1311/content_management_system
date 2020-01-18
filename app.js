@@ -123,8 +123,8 @@ function showAllRole() {
 };
 
 function updateEmp() {
-    inquirer.prompt(updateEmpQs).then(function(res) {
-        connection.query(`UPDATE employees SET firstname = "${res.fname}", lastname = "${res.lname}, role_id = "${res.role}`)
+    inquirer.prompt(updateSelEmpQs).then(function(res) {
+        connection.query(`UPDATE employees SET firstname = "${res.fname}", lastname = ${res.lname}, role_id = ${res.role} WHERE employees.firstname = ${res.select}`)
     })
 };
 
