@@ -69,9 +69,16 @@ const createRoleQs = [
 const updateSelEmpQs = [
     {
         name: "select",
-        message: "Which employee would you like to edit?",
+        message: "Select employee ID to edit",
         type: "input"
-    }
+    },
+    {
+        name: "role",
+        message: `What is this employee's new role?`,
+        type: "list",
+        choices: ["1", "2", "3"]
+    },
+
 ];
 
 
@@ -99,7 +106,7 @@ function openingSalvo() {
 };
 
 function showAll() {
-    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a LEFT JOIN roles b ON a.role_id = b.id`, function(err, res) {
+    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a LEFT JOIN roles b ON a.role_id = b.id ORDER BY a.id`, function(err, res) {
         if (err) throw err;
         console.table(res);
         openingSalvo();
@@ -124,7 +131,9 @@ function showAllRole() {
 
 function updateEmp() {
     inquirer.prompt(updateSelEmpQs).then(function(res) {
-        connection.query(`UPDATE employees SET firstname = "${res.fname}", lastname = ${res.lname}, role_id = ${res.role} WHERE employees.firstname = ${res.select}`)
+        connection.query(`UPDATE employees SET role_id = ${res.role} WHERE employees.id = ${res.select}`);
+        console.log(`Employee ID ${res.select} has been successfully updated!`)
+        openingSalvo();
     })
 };
 
@@ -151,3 +160,6 @@ function createRole() {
         openingSalvo();
     });
 };
+
+
+//need to search multiple queries for update, store data, push into new row. -OR- how to give two parameters for correct query target...
