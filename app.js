@@ -99,7 +99,7 @@ function openingSalvo() {
 };
 
 function showAll() {
-    connection.query(`SELECT * FROM employees a LEFT JOIN roles b ON a.role_id = b.id;`, function(err, res) {
+    connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a LEFT JOIN roles b ON a.role_id = b.id`, function(err, res) {
         if (err) throw err;
         console.table(res);
         openingSalvo();
