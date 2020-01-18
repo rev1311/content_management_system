@@ -162,4 +162,3 @@ function createRole() {
 };
 
 
-//need to search multiple queries for update, store data, push into new row. -OR- how to give two parameters for correct query target...
