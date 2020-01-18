@@ -1,6 +1,8 @@
+// calling on dependencies
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
+// creating connection variable for mysql database on the localhost
 const connection = mysql.createConnection({
     host: "localHost",
     port: 3306,
@@ -10,13 +12,14 @@ const connection = mysql.createConnection({
 
 });
 
+// establishing the connection and alerting pass/fail state and prompting the first function, openingSalvo();
 connection.connect(function(err) {
     if (err) throw err;
     console.log('Successfully connected as ' + connection.threadId);
     openingSalvo();
 });
 
-
+// inquirer questions, beginning application
 const openQs = [
     {
         name: "ask",
@@ -26,6 +29,7 @@ const openQs = [
     }
 ];
 
+// inquirer questions, creating a new employee
 const createEmpQs = [
     {
         name: "fname",
@@ -45,6 +49,7 @@ const createEmpQs = [
     }
 ];
 
+// inquirer questions, creating a new department
 const createDeptQs = [
     {
         name: "name",
@@ -53,6 +58,7 @@ const createDeptQs = [
     }
 ];
 
+// inquirer questions, creating a new role
 const createRoleQs = [
     {
         name: "title",
@@ -66,6 +72,7 @@ const createRoleQs = [
     }
 ]
 
+// inquirer questions, updating an existing employee
 const updateSelEmpQs = [
     {
         name: "select",
@@ -82,7 +89,7 @@ const updateSelEmpQs = [
 ];
 
 
-
+// displaying the first inquirer ask, handling the using response
 function openingSalvo() {
     inquirer.prompt(openQs).then(function(res) {
         if (res.ask === "View all employees") {
@@ -105,6 +112,7 @@ function openingSalvo() {
     });
 };
 
+// query database to show all employees in the list, join their information from second table, order by id
 function showAll() {
     connection.query(`SELECT a.id, firstname, lastname, b.title, b.salary FROM employees a LEFT JOIN roles b ON a.role_id = b.id ORDER BY a.id`, function(err, res) {
         if (err) throw err;
@@ -113,6 +121,7 @@ function showAll() {
     });
 };
 
+// query database to show all available departments
 function showAllDept() {
     connection.query(`SELECT * FROM department`, function(err, res) {
         if (err) throw err;
@@ -121,6 +130,7 @@ function showAllDept() {
     });
 };
 
+// query database to show all available roles
 function showAllRole() {
     connection.query(`SELECT * FROM roles`, function(err, res) {
         if (err) throw err;
@@ -129,6 +139,7 @@ function showAllRole() {
     });
 };
 
+// function to select an existing employee and update their role
 function updateEmp() {
     inquirer.prompt(updateSelEmpQs).then(function(res) {
         connection.query(`UPDATE employees SET role_id = ${res.role} WHERE employees.id = ${res.select}`);
@@ -137,6 +148,7 @@ function updateEmp() {
     })
 };
 
+// function to insert new employee into employee list with all required fields
 function createEmp() {
     inquirer.prompt(createEmpQs).then(function(res) {
         connection.query(`INSERT INTO employees (firstname, lastname, role_id) VALUES ("${res.fname}", "${res.lname}", "${res.role}")`);
@@ -145,6 +157,7 @@ function createEmp() {
     });
 };
 
+// query to create a new department
 function createDept() {
     inquirer.prompt(createDeptQs).then(function(res) {
         connection.query(`INSERT INTO department (name) VALUES ("${res.name}")`);
@@ -153,6 +166,7 @@ function createDept() {
     });
 };
 
+// function to create a new role
 function createRole() {
     inquirer.prompt(createRoleQs).then(function(res) {
         connection.query(`INSERT INTO roles (title, salary, dept_id) VALUES ("${res.title}", "${res.salary}")`);
